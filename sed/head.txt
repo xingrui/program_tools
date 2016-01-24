@@ -1,0 +1,4 @@
+#include <iostream>
+#define JUDGE(a) if (!isset_##a) {\
+    std::cout << #a << " is not found" << std::endl;\
+    throw TProtocolException(TProtocolException::INVALID_DATA);}
