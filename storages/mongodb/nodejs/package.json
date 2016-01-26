@@ -1,0 +1,10 @@
+{
+    "name":"adn_config",
+    "version":"0.0.1",
+    "main":"./index.js",
+    "description":"adn config interface",
+    "dependencies": {
+        "mongodb": "^2.0.37",
+        "q": "^1.4.1"
+    }
+}

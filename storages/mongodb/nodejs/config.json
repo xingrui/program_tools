@@ -1,0 +1,11 @@
+{
+    "mongodb_newadn": {
+        "connect": "mongodb://localhost:27017/new_adn",
+        "options": {
+            "server": {
+                "auto_reconnect": true,
+                "poolSize": 5
+            }
+        }
+    }
+}
