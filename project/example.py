@@ -34,7 +34,7 @@ def get_adn_mysql():
     conn.close()
 
 def get_adn_psql(channel_id):
-    conn = psycopg2.connect(database = "data", user = "root", password = "adn2015DATA", host = "adndataup.cj0ro5bbcusg.us-east-1.redshift.amazonaws.com", port = "5439") 
+    conn = psycopg2.connect(database = "data", user = "root", password = "adn2015DATA", host = "adn-adserver-datamining.mobvista.com", port = "5439") 
     cur = conn.cursor()
     sql = 'select count(*), campaign_id from log_click where extra10=6 and date=%s group by campaign_id' % ('20160322')
     result = cur.execute(sql)
