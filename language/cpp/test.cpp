@@ -10,9 +10,6 @@ public:
     A(int t_b):A(0, t_b) {}
 };
 int main(){
-    auto i = 1;
-    map<string, int> m{{"a", 1}, {"b", 2}, {"c", 3}};  
-    for (auto p : m){  
-            cout<<p.first<<" : "<<p.second<<endl;  
-    } 
+    A a(1,2);
+    std::cout << a.a << a.b << std::endl;
 }
