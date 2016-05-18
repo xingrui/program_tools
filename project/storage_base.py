@@ -51,7 +51,6 @@ def get_adn_psql_connection():
 def get_adn_psql_sql(sql):
     conn = get_adn_psql_connection()
     cur = conn.cursor()
-    sql = 'select count(*), campaign_id from log_click where extra10=6 and date=%s group by campaign_id' % ('20160322')
     cur.execute(sql)
     results = cur.fetchall()
     cur.close()
