@@ -1,9 +1,19 @@
-
+import time
 import redis
 import MySQLdb
 import json
 import psycopg2
 from pymongo import MongoClient
+
+def date_to_timestamp(time_str):
+    time_array = time.strptime(time_str, "%Y%m%d")
+    timestamp = int(time.mktime(time_array))
+    return timestamp
+
+def timestamp_to_date(timestamp):
+    x = time.localtime(timestamp)
+    res = time.strftime('%Y-%m-%d %H:%M:%S',x)
+    return res 
 
 def get_3s_redis_connection():
     r = redis.Redis(host = '192.168.1.17', port = 6480, db = 0, password='123456')
@@ -12,6 +22,11 @@ def get_3s_redis_connection():
 def get_3s_key(key_id):
     r = get_3s_redis_connection()
     res = r.get(key_id)
+    return res
+
+def get_3s_hget(key, key_id):
+    r = get_3s_redis_connection()
+    res = r.hget(key, key_id)
     return res
 
 def get_3s_psql_connection():
