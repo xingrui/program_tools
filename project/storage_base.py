@@ -1,8 +1,11 @@
 import time
+import os
 import redis
 import MySQLdb
 import json
 import psycopg2
+import functools 
+import pickle
 from pymongo import MongoClient
 
 def date_to_timestamp(time_str):
@@ -14,6 +17,14 @@ def timestamp_to_date(timestamp):
     x = time.localtime(timestamp)
     res = time.strftime('%Y-%m-%d %H:%M:%S',x)
     return res 
+
+def dump_file_wrapper(dump_file_name, func):
+    if os.path.exists(dump_file_name):
+        results = pickle.load(open(dump_file_name))
+    else:
+        results = func()
+        pickle.dump(results, open(dump_file_name, 'w'))
+    return results
 
 def get_3s_redis_connection():
     r = redis.Redis(host = '192.168.1.17', port = 6480, db = 0, password='123456')
