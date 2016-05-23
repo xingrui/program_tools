@@ -1,4 +1,7 @@
 import time
+import csv
+import sys
+import datetime
 import os
 import redis
 import MySQLdb
@@ -6,7 +9,42 @@ import json
 import psycopg2
 import functools 
 import pickle
+import urllib
 from pymongo import MongoClient
+
+valid_domain = ['app.appsflyer.com', 'app.adjust.io', 'app.adjust.com', 'control.kochava.com', 'ad.apsalar.com', 'measurementapi.com', '.api-0', 'app-adforce', 'track.uri6.com', 'lnk8.cn']
+def get_domain_name(domain):
+    global valid_domain
+    if domain in valid_domain:
+        return domain
+    for d in valid_domain:
+        if domain.find(d) != -1:
+            return d
+    return None
+
+def add_map_count(k_v_map, key):
+    if key not in k_v_map:
+        k_v_map[key] = 1
+    else:
+        k_v_map[key] += 1
+
+def get_hostname(url):
+    proto, rest = urllib.splittype(url)
+    host, rest = urllib.splithost(rest) 
+    return host
+
+def get_date():
+    if len(sys.argv) == 1:
+        yesterday = datetime.date.today() - datetime.timedelta(days=1)
+        date_str = yesterday.strftime('%Y%m%d')
+    else:
+        date_str = sys.argv[1]
+    return date_str
+
+def date_to_start_end_ts(time_str):
+    start_ts = date_to_timestamp(time_str)
+    end_ts = start_ts + 24 * 60 * 60
+    return start_ts, end_ts
 
 def date_to_timestamp(time_str):
     time_array = time.strptime(time_str, "%Y%m%d")
@@ -19,6 +57,7 @@ def timestamp_to_date(timestamp):
     return res 
 
 def dump_file_wrapper(dump_file_name, func):
+    dump_file_name = './data/' + dump_file_name
     if os.path.exists(dump_file_name):
         results = pickle.load(open(dump_file_name))
     else:
