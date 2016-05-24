@@ -12,6 +12,12 @@ import pickle
 import urllib
 from pymongo import MongoClient
 
+def write_csv_file(csv_file_name, header, contents):
+    writer = csv.writer(open(csv_file_name, 'w'))
+    writer.writerow(header)
+    for content in contents:
+        writer.writerow(content)
+
 valid_domain = ['app.appsflyer.com', 'app.adjust.io', 'app.adjust.com', 'control.kochava.com', 'ad.apsalar.com', 'measurementapi.com', '.api-0', 'app-adforce', 'track.uri6.com', 'lnk8.cn']
 def get_domain_name(domain):
     global valid_domain
