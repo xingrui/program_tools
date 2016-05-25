@@ -12,6 +12,11 @@ import pickle
 import urllib
 from pymongo import MongoClient
 
+def find_adn_id_by_3s_uuid(uuid):
+    sql = 'select id from campaign_list where status = 1 and network_cid="%s"' % uuid
+    results = get_adn_mysql_sql(sql)
+    return results
+
 def write_csv_file(csv_file_name, header, contents):
     writer = csv.writer(open(csv_file_name, 'w'))
     writer.writerow(header)
